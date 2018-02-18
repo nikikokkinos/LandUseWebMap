@@ -69,7 +69,7 @@ const lookupLandUse = function(landUseCode) {
 }
 
 // add geojson using jquery's $.getJSON()
-$.getJSON('data.StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
+$.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
   L.geoJSON(StudyAreaPlutoData, {
     style: {
       dashArray: '3 10',
