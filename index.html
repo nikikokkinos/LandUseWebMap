@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bronx Study Area</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+</head>
+
+<body>
+  <div id="my-map">
+    <div id="title-container">
+      <div id="legend">
+        <h3>Legend</h3>
+        <div class="legendItem"><div class="colorBox" style="background: #f4f455"></div>One & Two Family</div>
+        <div class="legendItem"><div class="colorBox" style="background: #ea6661"></div>Commerical & Office</div>
+        <div class="legendItem"><div class="colorBox" style="background: #f7d496"></div>Multi-Family Walk-up</div>
+        <div class="legendItem"><div class="colorBox" style="background: #f7cabf"></div>Mixed Residential & Commerical</div>
+        <div class="legendItem"><div class="colorBox" style="background: #5CA2D1"></div>Public Facilities and Institutions</div>
+
+      </div>
+      <h1>Bronx Study Area</h1>
+      <p>This map uses a clipping of MapPLUTO data to show a simple land use map for a study area in the Bronx.</p>
+      <p>Hover over a property to view its address and land use.</p>
+    </div>
+  </div>
+
+  <script src="//unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+  integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+  crossorigin=""></script>
+  <script>
+  src="//code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"</script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
