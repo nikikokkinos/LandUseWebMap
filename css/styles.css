@@ -11,9 +11,9 @@
   z-index: 1000;
   top: 11px;
   left: 56px;
-  background: #FFF;
+  background: slategrey;
   padding: 15px;
-  border-radius: 7px;
+  border-radius: 10px;
 }
 
 h1, h3  {
@@ -29,6 +29,7 @@ h1, h3  {
   background: #e6e6e6;
   padding: 12px;
   margin-left: 15px;
+  border-radius: 10px;
 }
 
 .colorBox {

@@ -73,14 +73,14 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
   L.geoJSON(StudyAreaPlutoData, {
     style: {
       dashArray: '3 10',
-      color: 'white',
+      color: 'WHITE',
       fillOpacity: 0,
     }
   }).addTo(map);
 
   // Use L.geoJSON to load PLUTO parcel data that we clipped in QGIS and change the CRS from 2263 to 4326
   // this was moved inside the getJSON callback so that the parcels will load on top of the study area study_boundary
-  var StudyArea = L.geoJSON(fourblocks, {
+  var studyarea = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
@@ -90,6 +90,7 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
             weight: 1,
           }
       },
+
     onEachFeature: function(feature, layer) {
       const description = lookupLandUse(feature.properties.LandUse).description;
 
@@ -112,7 +113,7 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
       });
       layer.on('mouseout', function (e) {
         this.closePopup();
-        blocksGeojson.resetStyle(e.target);
+        StudyArea.resetStyle(e.target);
       });
     }
   }).addTo(map);
