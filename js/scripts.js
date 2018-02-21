@@ -86,6 +86,7 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
 
   // Use L.geoJSON to load PLUTO parcel data that we clipped in QGIS and change the CRS from 2263 to 4326
   // this was moved inside the getJSON callback so that the parcels will load on top of the study area study_boundary
+
   var StudyArea = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
@@ -124,14 +125,8 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
     }
   }).addTo(map);
 
-  var filteredFeatures = StudyAreaPlutoData.features.filter(function(feature) {
-    return parseInt(feature.properties.OfficeArea) > 0 && parseInt(feature.properties.YearBuilt) >= 2003
-  })
-console.log(filteredFeatures.length)
-  var filteredFeatureCollection = {
-    type: 'FeatureCollection',
-    features: filteredFeatures
-  }
-
-  L.geoJSON(filteredFeatureCollection).addTo(map);
 })
+
+$.getJSON('data/New_RenovatedOffice.geojson', function(OfficeSpace) {
+
+// adding Office Space geojson to map
