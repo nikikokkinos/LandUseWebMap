@@ -9,6 +9,7 @@ L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.p
 
 
 const lookupLandUse = function(landUseCode) {
+
   switch(landUseCode) {
   case '01':
     return {
@@ -65,26 +66,31 @@ const lookupLandUse = function(landUseCode) {
       color: "#5f5f60",
       description: 'Vacant Land'
     }
+  default:
+    return {
+      color: 'black',
+      description: 'No LU Recorded'
+    }
   }
 }
 
 // add geojson using jquery's $.getJSON()
 $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
-  L.geoJSON(StudyAreaPlutoData, {
-    style: {
-      dashArray: '3 10',
-      color: 'WHITE',
-      fillOpacity: 0,
-    }
-  }).addTo(map);
+
+  // L.geoJSON(StudyAreaPlutoData, {
+  //   style: {
+  //     color: 'black',
+  //     fillOpacity: 0,
+  //   }
+  // }).addTo(map);
 
   // Use L.geoJSON to load PLUTO parcel data that we clipped in QGIS and change the CRS from 2263 to 4326
   // this was moved inside the getJSON callback so that the parcels will load on top of the study area study_boundary
-  var studyarea = L.geoJSON(StudyAreaPlutoData, {
+  var StudyArea = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
-            color: 'white',
+            color: 'BLACK',
             fillColor: lookupLandUse(feature.properties.LandUse).color,
             fillOpacity: 0.8,
             weight: 1,
@@ -117,4 +123,15 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
       });
     }
   }).addTo(map);
+
+  var filteredFeatures = StudyAreaPlutoData.features.filter(function(feature) {
+    return parseInt(feature.properties.OfficeArea) > 0 && parseInt(feature.properties.YearBuilt) >= 2003
+  })
+console.log(filteredFeatures.length)
+  var filteredFeatureCollection = {
+    type: 'FeatureCollection',
+    features: filteredFeatures
+  }
+
+  L.geoJSON(filteredFeatureCollection).addTo(map);
 })
