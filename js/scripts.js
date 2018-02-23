@@ -73,8 +73,9 @@ const lookupLandUse = function(landUseCode) {
     }
   }
 }
+console.log (StudyAreaPlutoData)
 
-var StudyAreaPlutoData = L.geoJSON(StudyAreaPlutoData, {
+var plutodata = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
