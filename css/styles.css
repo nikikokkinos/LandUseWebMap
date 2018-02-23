@@ -7,7 +7,7 @@
 }
 
 #title-container {
-  position: relative;
+  position: absolute;
   z-index: 1000;
   top: 10px;
   left: 10px;
@@ -25,7 +25,7 @@ h1, h3  {
 }
 
 #legend {
-  position: relative;
+  float: right;
   z-index: 1000;
   background: #slategrey;
   padding: 12px;

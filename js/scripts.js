@@ -74,20 +74,7 @@ const lookupLandUse = function(landUseCode) {
   }
 }
 
-// add geojson using jquery's $.getJSON()
-$.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
-
-  // L.geoJSON(StudyAreaPlutoData, {
-  //   style: {
-  //     color: 'black',
-  //     fillOpacity: 0,
-  //   }
-  // }).addTo(map);
-
-  // Use L.geoJSON to load PLUTO parcel data that we clipped in QGIS and change the CRS from 2263 to 4326
-  // this was moved inside the getJSON callback so that the parcels will load on top of the study area study_boundary
-
-  var StudyArea = L.geoJSON(StudyAreaPlutoData, {
+var StudyAreaPlutoData = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
@@ -124,9 +111,3 @@ $.getJSON('data/StudyAreaPlutoData.geojson', function(StudyAreaPlutoData) {
       });
     }
   }).addTo(map);
-
-})
-
-$.getJSON('data/New_RenovatedOffice.geojson', function(OfficeSpace) {
-
-// adding Office Space geojson to map
