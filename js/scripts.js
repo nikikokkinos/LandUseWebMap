@@ -73,7 +73,6 @@ const lookupLandUse = function(landUseCode) {
     }
   }
 }
-console.log (StudyAreaPlutoData)
 
 var plutodata = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
@@ -108,7 +107,34 @@ var plutodata = L.geoJSON(StudyAreaPlutoData, {
       });
       layer.on('mouseout', function (e) {
         this.closePopup();
-        StudyArea.resetStyle(e.target);
+        plutodata.resetStyle(e.target);
       });
     }
   }).addTo(map);
+
+// var Style = {
+//   "color": "red",
+//   "weight": 10,
+// };
+//
+// var Office = L.geoJSON(NewOfficeSpace, {
+//    style: Style
+// }).addTo(map);
+//
+
+console.log(geojsonMarkerOptions)
+
+var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#red",
+    color: "black",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+L.geoJSON(NewOfficeSpace, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+    }
+}).addTo(map);
