@@ -1,7 +1,9 @@
 var defaultCenter = [40.812575,-73.922024];
 var defaultZoom = 14;
 
-var map = L.map('my-map').setView(defaultCenter, defaultZoom);
+// Attempting to add layers to the map, one layer should be the LU map
+// var map = L.map('my-map').setView(defaultCenter, defaultZoom)
+// layers: [ ,plutodata];
 
 L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -111,6 +113,9 @@ var plutodata = L.geoJSON(StudyAreaPlutoData, {
       });
     }
   }).addTo(map);
+
+// Trying to add layers 
+// var LUMap = L.layerGroup([plutodata]);
 
 // var Style = {
 //   "color": "red",
