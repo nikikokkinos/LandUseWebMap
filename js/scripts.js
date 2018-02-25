@@ -120,17 +120,15 @@ var plutodata = L.geoJSON(StudyAreaPlutoData, {
 // var Office = L.geoJSON(NewOfficeSpace, {
 //    style: Style
 // }).addTo(map);
-//
 
-console.log(geojsonMarkerOptions)
+var myStyle = {
+    "color": "#black",
+    "weight": 5,
+    "opacity": 0.65
+};
 
 var geojsonMarkerOptions = {
-    radius: 8,
-    fillColor: "#red",
-    color: "black",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
+  style: 'myStyle',
 };
 
 L.geoJSON(NewOfficeSpace, {
