@@ -1,14 +1,20 @@
 var defaultCenter = [40.812575,-73.922024];
 var defaultZoom = 14;
 
-// Attempting to add layers to the map, one layer should be the LU map
-var map = L.map('my-map').setView(defaultCenter, defaultZoom)
-// layers: [ ,plutodata];
+var map = L.map('my-map', {
+  layers: [basemap, overlays]}).setView(defaultCenter, defaultZoom);
 
-L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
+var basemap = L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+});
 
+console.log(overlays)
+var overlays = {
+  "LUoverlay": LUoverlay,
+  "OfficeOverlay": OfficeOverlay
+};
+
+L.control.layers(basemap, overlays).addTo(map);
 
 const lookupLandUse = function(landUseCode) {
 
@@ -76,7 +82,8 @@ const lookupLandUse = function(landUseCode) {
   }
 }
 
-var plutodata = L.geoJSON(StudyAreaPlutoData, {
+var LUoverlay = L.layerGroup();
+L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
@@ -109,35 +116,59 @@ var plutodata = L.geoJSON(StudyAreaPlutoData, {
       });
       layer.on('mouseout', function (e) {
         this.closePopup();
-        plutodata.resetStyle(e.target);
+        LUoverlay.resetStyle(e.target);
       });
     }
-  }).addTo(map);
-
-// Trying to add layers
-// var LUMap = L.layerGroup([plutodata]);
-
-// var Style = {
-//   "color": "red",
-//   "weight": 10,
-// };
-//
-// var Office = L.geoJSON(NewOfficeSpace, {
-//    style: Style
-// }).addTo(map);
+  }).addTo(LUoverlay);
 
 var myStyle = {
-    "color": "#black",
-    "weight": 5,
-    "opacity": 0.65
+  radius: 10,
+  opacity: 1,
+  fillColor: 'red',
+  fillOpacity: 0.5,
+  color: '#FFF',
+  weight: .05
 };
 
 var geojsonMarkerOptions = {
   style: 'myStyle',
 };
 
-L.geoJSON(NewOfficeSpace, {
+var OfficeOverlay = L.geoJSON(NewOfficeSpace, {
     pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng, geojsonMarkerOptions);
     }
-}).addTo(map);
+}).addTo(OfficeOverlay);
+
+OfficeOverlay.forEach(function(OfficeObject) {
+  var latLon = [OfficeObject.lat, OfficeObject.lon];
+
+  // if (buildingObject.buildingtype === 'Commercial') buildingtypeColor = 'red';
+  // if (buildingObject.buildingtype === 'Mixed Use') buildingtypeColor = 'orange';
+
+  var options = {
+    radius: 10,
+    opacity: 1,
+    fillColor: "black",
+    fillOpacity: 0.5,
+    color: '#FFF',
+    weight: .05,
+  };
+
+  var marker = L.circleMarker(latLon, options)
+      .bindPopup(OfficeObject.Address + ' Built in ' +  OfficeObject.YearBuilt, {offset: [0, -6]})
+      .addTo(map)
+  // add the marker to the markersArray
+  markersArray.push(marker);
+});
+
+$('.fly-to-random').click(function(e) {
+  var randomMarker = markersArray[Math.floor(Math.random() * markersArray.length)];
+  map.setView(randomMarker._latlng);
+  randomMarker.openPopup();
+  e.stopPropagation();
+});
+
+$('.reset').click(function() {
+  map.flyTo(defaultCenter, defaultZoom)
+});
