@@ -2,7 +2,7 @@ var defaultCenter = [40.812575,-73.922024];
 var defaultZoom = 14;
 
 // Attempting to add layers to the map, one layer should be the LU map
-// var map = L.map('my-map').setView(defaultCenter, defaultZoom)
+var map = L.map('my-map').setView(defaultCenter, defaultZoom)
 // layers: [ ,plutodata];
 
 L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
@@ -114,7 +114,7 @@ var plutodata = L.geoJSON(StudyAreaPlutoData, {
     }
   }).addTo(map);
 
-// Trying to add layers 
+// Trying to add layers
 // var LUMap = L.layerGroup([plutodata]);
 
 // var Style = {
