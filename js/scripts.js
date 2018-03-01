@@ -1,20 +1,11 @@
 var defaultCenter = [40.812575,-73.922024];
 var defaultZoom = 14;
 
-var map = L.map('my-map', {
-  layers: [basemap, overlays]}).setView(defaultCenter, defaultZoom);
+var map = L.map('my-map').setView(defaultCenter, defaultZoom);
 
-var basemap = L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
+L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-});
-
-console.log(overlays)
-var overlays = {
-  "LUoverlay": LUoverlay,
-  "OfficeOverlay": OfficeOverlay
-};
-
-L.control.layers(basemap, overlays).addTo(map);
+}).addTo(map);
 
 const lookupLandUse = function(landUseCode) {
 
@@ -82,8 +73,7 @@ const lookupLandUse = function(landUseCode) {
   }
 }
 
-var LUoverlay = L.layerGroup();
-L.geoJSON(StudyAreaPlutoData, {
+var LU_Map = L.geoJSON(StudyAreaPlutoData, {
       style: function(feature) {
 
           return {
@@ -116,10 +106,10 @@ L.geoJSON(StudyAreaPlutoData, {
       });
       layer.on('mouseout', function (e) {
         this.closePopup();
-        LUoverlay.resetStyle(e.target);
+        LU_Map.resetStyle(e.target);
       });
     }
-  }).addTo(LUoverlay);
+  }).addTo(map);
 
 var myStyle = {
   radius: 10,
@@ -134,11 +124,11 @@ var geojsonMarkerOptions = {
   style: 'myStyle',
 };
 
-var OfficeOverlay = L.geoJSON(NewOfficeSpace, {
-    pointToLayer: function (feature, latlng) {
-        return L.circleMarker(latlng, geojsonMarkerOptions);
-    }
-}).addTo(OfficeOverlay);
+var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
+   pointToLayer: function (feature, latlng) {
+       return L.circleMarker(latlng, geojsonMarkerOptions);
+   }
+}).addTo(map);
 
 OfficeOverlay.forEach(function(OfficeObject) {
   var latLon = [OfficeObject.lat, OfficeObject.lon];
@@ -171,4 +161,4 @@ $('.fly-to-random').click(function(e) {
 
 $('.reset').click(function() {
   map.flyTo(defaultCenter, defaultZoom)
-});
+}).addTo(map);
