@@ -112,22 +112,18 @@ var LU_Map = L.geoJSON(StudyAreaPlutoData, {
     }
   }).addTo(map);
 
-var myStyle = {
-  radius: 10,
-  opacity: 1,
-  fillColor: 'red',
-  fillOpacity: 0.5,
-  color: '#FFF',
-  weight: .05
-};
-
 var geojsonMarkerOptions = {
-  style: 'myStyle',
+    radius: 10,
+    opacity: 1,
+    fillColor: "BLACK",
+    fillOpacity: 0.5,
+    weight: .05,
 };
 
 var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
    pointToLayer: function (feature, latlng) {
-       return L.circleMarker(latlng, geojsonMarkerOptions);
+       return L.circleMarker(latlng, geojsonMarkerOptions)
+          .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
    }
 }).addTo(map);
 
@@ -138,27 +134,27 @@ var overlays = {
 
 L.control.layers({}, overlays).addTo(map);
 //
-// // OfficeOverlay.forEach(function(OfficeObject) {
-// // //   var latLon = [OfficeObject.lat, OfficeObject.lon];
-// // //
-// // //   // if (buildingObject.buildingtype === 'Commercial') buildingtypeColor = 'red';
-// // //   // if (buildingObject.buildingtype === 'Mixed Use') buildingtypeColor = 'orange';
-// // //
-// // //   var options = {
-// // //     radius: 10,
-// // //     opacity: 1,
-// // //     fillColor: "black",
-// // //     fillOpacity: 0.5,
-// // //     color: '#FFF',
-// // //     weight: .05,
-// // //   };
-// // //
-// // //   var marker = L.circleMarker(latLon, options)
-// // //       .bindPopup(OfficeObject.Address + ' Built in ' +  OfficeObject.YearBuilt, {offset: [0, -6]})
-// // //       .addTo(map)
-// // //   // add the marker to the markersArray
-// // //   markersArray.push(marker);
-// // // });
+// OfficeOverlay.forEach(function(OfficeObject) {
+//   var latLon = [OfficeObject.lat, OfficeObject.lon];
+
+  // if (buildingObject.buildingtype === 'Commercial') buildingtypeColor = 'red';
+  // if (buildingObject.buildingtype === 'Mixed Use') buildingtypeColor = 'orange';
+
+//   var options = {
+//     radius: 10,
+//     opacity: 1,
+//     fillColor: "black",
+//     fillOpacity: 0.5,
+//     color: '#FFF',
+//     weight: .05,
+//   };
+//
+//   var marker = L.circleMarker(latLon, options)
+//       .bindPopup(OfficeObject.Address + ' Built in ' +  OfficeObject.YearBuilt, {offset: [0, -6]})
+//       .addTo(map)
+//   // add the marker to the markersArray
+//   markersArray.push(marker);
+// });
 //
 // $('.fly-to-random').click(function(e) {
 //   var randomMarker = markersArray[Math.floor(Math.random() * markersArray.length)];
@@ -169,4 +165,4 @@ L.control.layers({}, overlays).addTo(map);
 //
 // $('.reset').click(function() {
 //   map.flyTo(defaultCenter, defaultZoom)
-// }).addTo(map);
+// // }).addTo(map);

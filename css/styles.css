@@ -25,6 +25,7 @@ h1, h3  {
 }
 
 #legend {
+  display: none;
   float: right;
   z-index: 1000;
   background: #slategrey;
