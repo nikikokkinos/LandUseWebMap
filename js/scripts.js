@@ -117,12 +117,12 @@ var LU_Map = L.geoJSON(PlutoData, {
         LU_Map.resetStyle(e.target);
       });
     }
-  })
+  }).addTo(map);
 
 var geojsonMarkerOptions = {
     radius: 10,
     opacity: 1,
-    fillColor: "BLACK",
+    fillColor: "RED",
     fillOpacity: 0.5,
     weight: .05,
 };
@@ -131,18 +131,48 @@ var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
    pointToLayer: function (feature, latlng) {
        return L.circleMarker(latlng, geojsonMarkerOptions)
           .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+          circleMarker.on('mouseover', function (e) {
+              this.openPopup();
+          });
+          circleMarker.on('mouseout', function (e) {
+              this.closePopup();
+              OfficeOverlay.resetStyle(e.target);
+          });
    }
+})
+
+var ResidentialPoints = {
+  radius: 10,
+  opacity: 1,
+  fillColor: "ORANGE",
+  fillOpacity: 0.5,
+  weight: .05,
+};
+
+var ResidentialOverlay = L.geoJSON(NewResidentialFloorArea, {
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, ResidentialPoints)
+         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+         circleMarker.on('mouseover', function (e) {
+             this.openPopup();
+         });
+         circleMarker.on('mouseout', function (e) {
+             this.closePopup();
+             ResidentialOverlay.resetStyle(e.target);
+         });
+  }
 })
 
 var overlays = {
   "LandUse": LU_Map,
-  "Offices": OfficeOverlay
+  "Offices": OfficeOverlay,
+  "Residential": ResidentialOverlay,
 };
 
 L.control.layers({}, overlays).addTo(map);
 
 $(document).ready(function(){
 $("LandUse").click(function(){
-        $("#legend").show();
+        $("#legend").hide();
     });
 });
