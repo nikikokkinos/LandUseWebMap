@@ -74,7 +74,11 @@ const lookupLandUse = function(landUseCode) {
   }
 }
 
-var StudyAreaBoundary = L.geoJSON(StudyArea).addTo(map);
+var StudyAreaBoundary = L.geoJSON(StudyArea, {
+  fillColor: "none",
+  color: "#ff8049",
+  weight: 3,
+}).addTo(map);
 
 
 var LU_Map = L.geoJSON(PlutoData, {
@@ -113,7 +117,7 @@ var LU_Map = L.geoJSON(PlutoData, {
         LU_Map.resetStyle(e.target);
       });
     }
-  }).addTo(map);
+  })
 
 var geojsonMarkerOptions = {
     radius: 10,
@@ -128,7 +132,7 @@ var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
        return L.circleMarker(latlng, geojsonMarkerOptions)
           .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
    }
-}).addTo(map);
+})
 
 var overlays = {
   "LandUse": LU_Map,
@@ -136,3 +140,9 @@ var overlays = {
 };
 
 L.control.layers({}, overlays).addTo(map);
+
+$(document).ready(function(){
+$("LandUse").click(function(){
+        $("#legend").show();
+    });
+});
