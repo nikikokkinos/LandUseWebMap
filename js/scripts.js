@@ -188,7 +188,7 @@ var RetailOverlay = L.geoJSON(NewRetailFloorArea, {
 var StoragePoints = {
   radius: 10,
   opacity: 1,
-  fillColor: "GREY",
+  fillColor: "#939393",
   fillOpacity: 0.5,
   weight: .05,
 };
@@ -207,12 +207,35 @@ var StorageOverlay = L.geoJSON(NewStorageArea, {
   }
 })
 
+var FactoryPoints = {
+  radius: 10,
+  opacity: 1,
+  fillColor: "#262626",
+  fillOpacity: 0.5,
+  weight: .05,
+};
+
+var FactoryOverlay = L.geoJSON(NewFactoryFloorArea, {
+  pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, FactoryPoints)
+         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+         circleMarker.on('mouseover', function (e) {
+             this.openPopup();
+         });
+         circleMarker.on('mouseout', function (e) {
+             this.closePopup();
+             FactoryOverlay.resetStyle(e.target);
+         });
+  }
+})
+
 var overlays = {
   "LandUse": LU_Map,
   "Offices": OfficeOverlay,
   "Residential": ResidentialOverlay,
   "Retail": RetailOverlay,
   "Storage": StorageOverlay,
+  "Factory": FactoryOverlay,
 };
 
 L.control.layers({}, overlays).addTo(map);
