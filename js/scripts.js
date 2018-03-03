@@ -74,7 +74,10 @@ const lookupLandUse = function(landUseCode) {
   }
 }
 
-var LU_Map = L.geoJSON(StudyAreaPlutoData, {
+var StudyAreaBoundary = L.geoJSON(StudyArea).addTo(map);
+
+
+var LU_Map = L.geoJSON(PlutoData, {
       style: function(feature) {
 
           return {
@@ -133,36 +136,3 @@ var overlays = {
 };
 
 L.control.layers({}, overlays).addTo(map);
-//
-// OfficeOverlay.forEach(function(OfficeObject) {
-//   var latLon = [OfficeObject.lat, OfficeObject.lon];
-
-  // if (buildingObject.buildingtype === 'Commercial') buildingtypeColor = 'red';
-  // if (buildingObject.buildingtype === 'Mixed Use') buildingtypeColor = 'orange';
-
-//   var options = {
-//     radius: 10,
-//     opacity: 1,
-//     fillColor: "black",
-//     fillOpacity: 0.5,
-//     color: '#FFF',
-//     weight: .05,
-//   };
-//
-//   var marker = L.circleMarker(latLon, options)
-//       .bindPopup(OfficeObject.Address + ' Built in ' +  OfficeObject.YearBuilt, {offset: [0, -6]})
-//       .addTo(map)
-//   // add the marker to the markersArray
-//   markersArray.push(marker);
-// });
-//
-// $('.fly-to-random').click(function(e) {
-//   var randomMarker = markersArray[Math.floor(Math.random() * markersArray.length)];
-//   map.setView(randomMarker._latlng);
-//   randomMarker.openPopup();
-//   e.stopPropagation();
-// });
-//
-// $('.reset').click(function() {
-//   map.flyTo(defaultCenter, defaultZoom)
-// // }).addTo(map);
