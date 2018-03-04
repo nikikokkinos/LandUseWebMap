@@ -119,129 +119,134 @@ var LU_Map = L.geoJSON(PlutoData, {
     }
   }).addTo(map);
 
-var geojsonMarkerOptions = {
+  var geojsonMarkerOptions = {
+      radius: 10,
+      opacity: 1,
+      fillColor: "ORANGE",
+      fillOpacity: 0.5,
+      weight: .05,
+  };
+
+  var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
+     pointToLayer: function (feature, latlng) {
+       var marker = L.circleMarker(latlng, geojsonMarkerOptions)
+           .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+           marker.on('mouseover', function (e) {
+               this.openPopup();
+           });
+           marker.on('mouseout', function (e) {
+               this.closePopup();
+           });
+
+        return marker;
+    }
+   })
+
+  var ResidentialPoints = {
     radius: 10,
     opacity: 1,
     fillColor: "YELLOW",
     fillOpacity: 0.5,
     weight: .05,
-};
+  };
 
-var OfficeOverlay  = L.geoJSON(NewOfficeSpace, {
-   pointToLayer: function (feature, latlng) {
-       return L.circleMarker(latlng, geojsonMarkerOptions)
+  var ResidentialOverlay = L.geoJSON(NewResidentialFloorArea, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, geojsonMarkerOptions)
           .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
-          circleMarker.on('mouseover', function (e) {
+          marker.on('mouseover', function (e) {
               this.openPopup();
           });
-          circleMarker.on('mouseout', function (e) {
+          marker.on('mouseout', function (e) {
               this.closePopup();
-              OfficeOverlay.resetStyle(e.target);
           });
+
+       return marker;
+      }
+  })
+
+  var RetailPoints = {
+    radius: 10,
+    opacity: 1,
+    fillColor: "RED",
+    fillOpacity: 0.5,
+    weight: .05,
+  };
+
+  var RetailOverlay = L.geoJSON(NewRetailFloorArea, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, geojsonMarkerOptions)
+          .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+          marker.on('mouseover', function (e) {
+              this.openPopup();
+          });
+          marker.on('mouseout', function (e) {
+              this.closePopup();
+          });
+
+       return marker;
+      }
+  })
+
+  var StoragePoints = {
+    radius: 10,
+    opacity: 1,
+    fillColor: "#939393",
+    fillOpacity: 0.5,
+    weight: .05,
+  };
+
+  var StorageOverlay = L.geoJSON(NewStorageArea, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, geojsonMarkerOptions)
+          .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+          marker.on('mouseover', function (e) {
+              this.openPopup();
+          });
+          marker.on('mouseout', function (e) {
+              this.closePopup();
+          });
+
+       return marker;
+      }
+  })
+
+  var FactoryPoints = {
+    radius: 10,
+    opacity: 1,
+    fillColor: "#262626",
+    fillOpacity: 0.5,
+    weight: .05,
+  };
+
+  var FactoryOverlay = L.geoJSON(NewFactoryFloorArea, {
+    pointToLayer: function (feature, latlng) {
+      var marker = L.circleMarker(latlng, geojsonMarkerOptions)
+          .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
+          marker.on('mouseover', function (e) {
+              this.openPopup();
+          });
+          marker.on('mouseout', function (e) {
+              this.closePopup();
+          });
+
+       return marker;
    }
-})
+  })
 
-var ResidentialPoints = {
-  radius: 10,
-  opacity: 1,
-  fillColor: "ORANGE",
-  fillOpacity: 0.5,
-  weight: .05,
-};
+  var overlays = {
+    "LandUse": LU_Map,
+    "Offices": OfficeOverlay,
+    "Residential": ResidentialOverlay,
+    "Retail": RetailOverlay,
+    "Storage": StorageOverlay,
+    "Factory": FactoryOverlay,
+  };
 
-var ResidentialOverlay = L.geoJSON(NewResidentialFloorArea, {
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, ResidentialPoints)
-         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
-         circleMarker.on('mouseover', function (e) {
-             this.openPopup();
-         });
-         circleMarker.on('mouseout', function (e) {
-             this.closePopup();
-             ResidentialOverlay.resetStyle(e.target);
-         });
-  }
-})
+  L.control.layers({}, overlays).addTo(map);
 
-var RetailPoints = {
-  radius: 10,
-  opacity: 1,
-  fillColor: "RED",
-  fillOpacity: 0.5,
-  weight: .05,
-};
-
-var RetailOverlay = L.geoJSON(NewRetailFloorArea, {
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, RetailPoints)
-         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
-         circleMarker.on('mouseover', function (e) {
-             this.openPopup();
-         });
-         circleMarker.on('mouseout', function (e) {
-             this.closePopup();
-             RetailOverlay.resetStyle(e.target);
-         });
-  }
-})
-
-var StoragePoints = {
-  radius: 10,
-  opacity: 1,
-  fillColor: "#939393",
-  fillOpacity: 0.5,
-  weight: .05,
-};
-
-var StorageOverlay = L.geoJSON(NewStorageArea, {
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, StoragePoints)
-         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
-         circleMarker.on('mouseover', function (e) {
-             this.openPopup();
-         });
-         circleMarker.on('mouseout', function (e) {
-             this.closePopup();
-             StorageOverlay.resetStyle(e.target);
-         });
-  }
-})
-
-var FactoryPoints = {
-  radius: 10,
-  opacity: 1,
-  fillColor: "#262626",
-  fillOpacity: 0.5,
-  weight: .05,
-};
-
-var FactoryOverlay = L.geoJSON(NewFactoryFloorArea, {
-  pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, FactoryPoints)
-         .bindPopup(feature.properties.Address + ' Built in ' +  feature.properties.YearBuilt, {offset: [0, -6]});
-         circleMarker.on('mouseover', function (e) {
-             this.openPopup();
-         });
-         circleMarker.on('mouseout', function (e) {
-             this.closePopup();
-             FactoryOverlay.resetStyle(e.target);
-         });
-  }
-})
-
-var overlays = {
-  "LandUse": LU_Map,
-  "Offices": OfficeOverlay,
-  "Residential": ResidentialOverlay,
-  "Retail": RetailOverlay,
-  "Storage": StorageOverlay,
-  "Factory": FactoryOverlay,
-};
-
-L.control.layers({}, overlays).addTo(map);
-
-$(document).ready(function(){
-$("LandUse").click(function(){
-        $("#legend").hide();
-    });
-});
+  $(document).ready(function(){
+  $("LandUse").click(function(){
+          $("#legend").hide();
+      });
+  });
